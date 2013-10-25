@@ -1,339 +1,340 @@
 var API_4_MINDMAP = function(){  //singleton - при многократном запуске инициализируется единожды
-	 if ( (typeof arguments.callee.instance=='undefined') ) { //если объект ещё не создан
-		 arguments.callee.instance = new function() {
-		     var this_api = this; //кэшируем самого себя, чтобы использовать внутри функций
+    if (typeof arguments.callee.instance == 'undefined') { //если объект ещё не создан
+        arguments.callee.instance = new function () {
+            var this_api = this; //кэшируем самого себя, чтобы использовать внутри функций
 
-		     var my_all_data = {}; //главный массив с данными
-		      
-		     var my_all_data_template = { //задаём первоначальные данные, если это первый запуск
-				 "n1":{ id:1, parent_id:0, title:"Карта ума<br>своими руками<br>"+
-    			 "с хранением данных<br>в браузере.<br>Javascript" },
-    			 "n2":{ id:2, parent_id:1, title:"Изучим", icon:"icon-gift" },
-    			 "n3":{ id:3, parent_id:2, title:"Рисуем линии между элементами", icon:"icon-flow-line" }, 
-    			 "n5":{ id:5, parent_id:3, title:"Используем плагин jsPlumb", icon: "icon-link" }, 
-    			 "n4":{ id:4, parent_id:3, title:"Каждая линия - отдельный SVG" }, 
-    			 "n7":{ id:7, parent_id:6, title:"Используем плагин jQuery ContextMenu", icon: "icon-link" }, 
-    			 "n8":{ id:8, parent_id:1, title:"Объём кода", icon: "icon-lamp" }, 
-    			 "n9":{ id:9, parent_id:8, title:"Javascript + jQuery — 520 строк" },
-    			 "n10":{ id:10, parent_id:2, title:"Сохраненяем данные в браузере", icon: "icon-floppy-1" },
-    			 "n11":{ id:11, parent_id:17, title:"IndexedDB" },
-    			 "n12":{ id:12, parent_id:17, title:"webSQL" },
-    			 "n13":{ id:13, parent_id:17, title:"LocalStorage" },
-    			 "n14":{ id:14, parent_id:10, title:"Используем плагин Ydn.db", icon: "icon-link" },
-    			 "n15":{ id:15, parent_id:10, title:"Объём данных не ограничен" },
-    			 "n16":{ id:16, parent_id:2, title:"Используем синглтон в Javascript", icon: "icon-cd" },
-    			 "n17":{ id:17, parent_id:10, title:"Доступны" },
-    			 "n18":{ id:18, parent_id:6, title:"Динамическое добавление пунктов" },
-    			 "n20":{ id:20, parent_id:8, title:"CSS — 220 строк" },
-    			 "n19":{ id:19, parent_id:8, title:"HTML — 50 строк" },
-    			 "n22":{ id:22, parent_id:16, title:"Это позволяет избежать глобальных переменных" },
-    			 "n23":{ id:23, parent_id:16, title:"Наводим порядок среди функций" },
-    			 "n24":{ id:24, parent_id:2, title:"Используем иконочный шрифт", icon: "icon-emo-wink" },
-    			 "n6":{ id:6, parent_id:2, title:"Контекстное меню", icon: "icon-list" }, 
-    			 "n25":{ id:25, parent_id:24, title:"Используем набор шрифтов Fontello", icon: "icon-link" },
-    			 "n27":{ id:27, parent_id:2, title:"Drag&Drop jQuery UI", icon: "icon-link" },
-    			 "n26":{ id:26, parent_id:24, title:"Векторные иконки с идеальным сглаживанием" }
-    		   };
-		 	
-		 	 this.jsSaveAllToDB = function() { //сохраняем весь массив в базу данных
-			 	 $.each(my_all_data, function(i, el){
-		       		db.put("mindmap_db", el ).done(function(){ 
-		       		});
-			 	 });
-		 	 }
+            var my_all_data = {}; //главный массив с данными
 
-		 	 this.jsLoadAllFromDB = function() { //загружаем весь массив из базы данных браузера или из массива
-			 	 var d=new $.Deferred(); //объект позволяющий работать асинхронно
+            var my_all_data_template = { //задаём первоначальные данные, если это первый запуск
+                "n1": { id: 1, parent_id: 0, title: "Карта ума<br>своими руками<br>" +
+                    "с хранением данных<br>в браузере.<br>Javascript" },
+                "n2": { id: 2, parent_id: 1, title: "Изучим", icon: "icon-gift" },
+                "n3": { id: 3, parent_id: 2, title: "Рисуем линии между элементами", icon: "icon-flow-line" },
+                "n5": { id: 5, parent_id: 3, title: "Используем плагин jsPlumb", icon: "icon-link" },
+                "n4": { id: 4, parent_id: 3, title: "Каждая линия - отдельный SVG" },
+                "n7": { id: 7, parent_id: 6, title: "Используем плагин jQuery ContextMenu", icon: "icon-link" },
+                "n8": { id: 8, parent_id: 1, title: "Объём кода", icon: "icon-lamp" },
+                "n9": { id: 9, parent_id: 8, title: "Javascript + jQuery — 520 строк" },
+                "n10": { id: 10, parent_id: 2, title: "Сохраненяем данные в браузере", icon: "icon-floppy-1" },
+                "n11": { id: 11, parent_id: 17, title: "IndexedDB" },
+                "n12": { id: 12, parent_id: 17, title: "webSQL" },
+                "n13": { id: 13, parent_id: 17, title: "LocalStorage" },
+                "n14": { id: 14, parent_id: 10, title: "Используем плагин Ydn.db", icon: "icon-link" },
+                "n15": { id: 15, parent_id: 10, title: "Объём данных не ограничен" },
+                "n16": { id: 16, parent_id: 2, title: "Используем синглтон в Javascript", icon: "icon-cd" },
+                "n17": { id: 17, parent_id: 10, title: "Доступны" },
+                "n18": { id: 18, parent_id: 6, title: "Динамическое добавление пунктов" },
+                "n20": { id: 20, parent_id: 8, title: "CSS — 220 строк" },
+                "n19": { id: 19, parent_id: 8, title: "HTML — 50 строк" },
+                "n22": { id: 22, parent_id: 16, title: "Это позволяет избежать глобальных переменных" },
+                "n23": { id: 23, parent_id: 16, title: "Наводим порядок среди функций" },
+                "n24": { id: 24, parent_id: 2, title: "Используем иконочный шрифт", icon: "icon-emo-wink" },
+                "n6": { id: 6, parent_id: 2, title: "Контекстное меню", icon: "icon-list" },
+                "n25": { id: 25, parent_id: 24, title: "Используем набор шрифтов Fontello", icon: "icon-link" },
+                "n27": { id: 27, parent_id: 2, title: "Drag&Drop jQuery UI", icon: "icon-link" },
+                "n26": { id: 26, parent_id: 24, title: "Векторные иконки с идеальным сглаживанием" }
+            };
 
-		 	 	 my_all_data = {}; //обнуляем данные
-	    		 db.values("mindmap_db",null,99999999).done(function(records) {
-	    		 	if(records.length) {
-	    		 	$.each(records, function(i, el){
-		    		 	my_all_data["n"+el.id] = {};
-		    		 	my_all_data["n"+el.id] = el;
-	    		 	});
-	    		 	} else { //если это первый запуск, заполняю данные по шаблону и сохраняю в базе данных
-		    		 	my_all_data = my_all_data_template;
-		    		 	this_api.jsSaveAllToDB();
-	    		 	}
-	    		 	d.resolve(); //выполняем обещание, при этом выполнится функция done
-	    		 });
-	    		 
-	    		 return d.promise(); //говорим, что скоро выполним обещание, когда всё загрузится
+            this.jsSaveAllToDB = function () { //сохраняем весь массив в базу данных
+                $.each(my_all_data, function (i, el) {
+                    db.put("mindmap_db", el).done(function () {
+                    });
+                });
+            }
 
-		 	 }
-		 	
-		 	 this.jsFind = function(id, changes) { //возвращаем элемент с id или меняем его параметры
-		 	 	
-		 	 	 //находим элемент в массиве объектов, буква n нужна для отработки отрицательных id
-		 	 	 var answer = my_all_data["n"+id]; 
-		 	 	 if(!answer) return false; //если элемента в массиве нет
-		 	 
-		 	 	 if(changes) { //если нужно внести изменения, присваиваем их по очереди
-			 	 	 $.each(changes, function(name_field, new_field_value){
-				 	 	 answer[name_field] = new_field_value;
-			 	 	 });
-		       		 
-		       		 db.put("mindmap_db", answer ).done(function(){ //асинхронно сохраняем данные в базе браузера
-		       		 	console.info("Изменения сохранены в базу данных браузера"); //выводим в консоль браузера
-		       		 });
-			 	 	 
-		 	 	 }
-			 	 return answer;
-		 	 }
-		 	 
-		 	 this.jsFindByParent = function(parent_id) { //подбираем всех детей родителя parent_id
-		 	 	 var answer = [];
-			 	 $.each(my_all_data, function(i,el){ //фильтруем все неудалённые элементы с родителем = parent_id
-				 	if((el.parent_id == parent_id) && (!el.del)) answer.push(el);
-			 	 });
-			 	 return answer;
-		 	 }
-		 	 
-		 	 this.jsAddNew = function(parent_id, title) { //добавляем нового ребёнка родителю parent_id
-		 	 	var max_id = 0;
-		 	 	$.each(my_all_data, function(i,el){ //находим максимальный id
-			 	 	if(el.id>max_id) max_id = el.id;
-		 	 	});
-		 	 	var new_id = (parseInt(max_id)+1); //новый неиспользованный id
-		 	 	my_all_data["n"+new_id] = {}; //создаём новый объект
-		 	 	my_all_data["n"+new_id] = {id:new_id, parent_id: parent_id, title: title}; //присваиваем заголовок
-		 	 	
-		 	 	return new_id;
-			 }
-			 
-		 	 //рекурсивно перебирает ВСЕХ детей, внуков и так далее
-		 	 this.jsRecursiveByParent = function(id, recursive_array) {
-		 	   if(!recursive_array) recursive_array = [];
-		 	   
-		 	   var answer = this_api.jsFindByParent(id);
-		 	   
-		 	   $.each(answer,function(i,el) { //обходим все элементы и вызываем сами себя, пока есть дети
-		 	   	   recursive_array.push(el);
-		 	       recursive_array = this_api.jsRecursiveByParent(el.id, recursive_array);
-		 	   });
-		 	 return recursive_array;
-		 	 }
-		 	 
+            this.jsLoadAllFromDB = function () { //загружаем весь массив из базы данных браузера или из массива
+                var d = new $.Deferred(); //объект позволяющий работать асинхронно
 
-		 	 this.jsDeleteById = function(id) { //удаляем всех детей и потомков этого родителя
-		 	 	 if(confirm("Удалить элемент №"+id+" и его содержимое?")) {
-		 	 	 	var childs = this_api.jsRecursiveByParent(id);
-		 	 	 	$.each(childs, function(i, el){
-		 	 	 		api4mindmap.jsFind(el.id, {del:1}); //"джихад" - сначала удаляем детей и всех потомков
-		 	 	 	});
-		 	 	 	if(id!=1) api4mindmap.jsFind(id, {del:1}); //потом родителя, если это не №1
-		 	 	 }
-		 	 }
-		 	 
-		 	 this.jsRenderAllMap = function(focus_id) { //выводим все элементы карты на экран
-		 	 	 if(!focus_id) focus_id = 1;
-			 	 var html = "<ul myid='"+focus_id+"'>";
-			 	 html = this_api.jsRenderOneParent(focus_id, html); //рекурсивная функция
-			 	 html += "</ul>";
-			 	 $("#mindmap").html(html);
-			 	 jsMakeDroppable(); //делаем новые элементы перетаскиваемыми
-		 	 }
-		 	 
-		 	 this.jsRenderOneParent = function(parent_id, html) { //рисуем элемент и всех потомков
-			 	 html += "<li id='node_"+parent_id+"' myid='"+parent_id+"'>";
-			 	 html += "<div class='big_n_title'>";
-			 	 html += this_api.jsRenderOneElement(parent_id); //рисуем сам элемент
-			 	 html += "</div>";
-			 	 
-			 	 var childs = this_api.jsFindByParent(parent_id); //подбираем всех детей
-			 	 if(childs.length) {
-				 	 html += "<ul class='childs' myid='"+parent_id+"'>";
-			 	 }
-			 	 $.each(childs, function(i,el){
-				 	html = this_api.jsRenderOneParent(el.id,html); //рекурсивно вызываем сами себя, пока есть дети
-			 	 });
-			 	 if(childs.length) {
-				 	 html += "</ul>";
-			 	 }
-			 	 
-			 	 html += "</li>";
-			 	 return html;
-		 	 }
-		 	 
-		 	 
-		 	 this.jsRenderOneElement = function(id) { //рисуем один элемент
-		 	 	 var element = this_api.jsFind(id); //сам элемент
-		 	 	 var childs_count = this_api.jsFindByParent(id).length; //кол-во детей у элемента
+                my_all_data = {}; //обнуляем данные
+                db.values("mindmap_db", null, 99999999).done(function (records) {
+                    if (records.length) {
+                        $.each(records, function (i, el) {
+                            my_all_data["n" + el.id] = {};
+                            my_all_data["n" + el.id] = el;
+                        });
+                    } else { //если это первый запуск, заполняю данные по шаблону и сохраняю в базе данных
+                        my_all_data = my_all_data_template;
+                        this_api.jsSaveAllToDB();
+                    }
+                    d.resolve(); //выполняем обещание, при этом выполнится функция done
+                });
 
-		 	 	 var icon_type = '';
-		 	 	 if(element.icon) icon_type = element.icon; //если сохранена иконка, используем её
-		 	 	 
-		 	 	 if(childs_count>0) { //если это папка
-		 	 	 	var collapser_html = "<div class='collapse'></div>"; //круглый минус или плюс, для сворачивания
-			 	 	var icon = "<div class='type_icon'><i class='icon-folder-1 folder'><div class='count'>"+
-			 	 		childs_count+"</div></i><i class='"+icon_type+"'></i>"+"</div>";
-		 	 	 } else {
-			 	 	var collapser_html = "";
-			 	 	var icon = "<div class='type_icon'><i class='"+icon_type+"'></i></div>";
-		 	 	 }
-		 	 	 
-			 	 var answer = icon+"<div class='n_title' contenteditable='true'>"+element.title+
-			 	 			       "</div><div class='contextmenu'></div>"+collapser_html;
-			 	 return answer; 
-		 	 }
-		   	 	
-			 this.jsDrawMindmap = function(focus_id) { //функция рисует линии между элементами
-			 
-			    var line_cache = [];
-			    
-			    $("#mindmap ul:visible").each(function(){ //исключаем свёрнутые списки ul
-			    	var ul_id = $(this).attr("myid");
-			    	var childs = this_api.jsFindByParent(ul_id);
+                return d.promise(); //говорим, что скоро выполним обещание, когда всё загрузится
 
-			     	$.each(childs, function(i,el){ //для наглядности, сначала заполняем массив нужных линий
-			    	 	var target = el.id;
-			    	 	if(!$("li[myid='"+target+"']"+" .big_n_title:first").hasClass("_jsPlumb_endpoint_anchor_")) {
-			    		 	var parent_id = el.parent_id;
-			    		 	line_cache.push( {source: parent_id, target: target} );
-			    	 	}
-			     	});
-			    });
-			    
-			    if(line_cache.length) { //запускаем кеширование отрисовки линий, чтобы всё происходило быстрее
-			     	if(!myjsPlumb.isSuspendDrawing()) {
-			     		myjsPlumb.setSuspendDrawing(true, true);
-			     		console.info("set_suspend");
-			     	}
-			    }
-			    
-			    
-			    $.each(line_cache, function(i, el){
-				      
-				      if(el.source == 1) { //у первого элемента линия начинается с половины высоты
-				      	anchor1 = [ 1, 0.5, 1, 0, -1, -1 ];
-				      } else {
-				      	anchor1 = [ 1, 1, 1, 0, -1, -1 ]; //линия идёт с низа
-				      }
-			    
-					  //первая точка для линии:
-		    	      var p1 = myjsPlumb.addEndpoint("node_"+el.source+" .big_n_title:first", 
-		    	      		                        { anchor: anchor1 });			    	      
-		    	      //вторая точка для линии:		                        
-		    	      var p2 = myjsPlumb.addEndpoint("node_"+el.target+" .big_n_title:first", 
-		    	      								{ anchor: [ 0, 1, -1, 0, 1, -1 ]});
-					  //сколько детей у элемента:
-					  var count = this_api.jsFindByParent(el.source).length;
+            }
 
-					  if(count>10) { //если больше десяти, то линии будут прямыми
-			    	      var LineType = "Straight";
-					  } else {
-			    	      var LineType = "Bezier"; //кривая линия Безье
-					  }
-			    	  
-			    	  //соединяем две точки, которые определили выше  
-			  		  myjsPlumb.connect({source: p1, target: p2, scope:"someScope", 
-			  		  					deleteEndpointsOnDetach:true, connector:[ LineType, 
-			  		  					{ curviness: 30, cornerRadius: 20 } ]});
-			   });
-			 } //jsDrawMindmap
-		   	 	
-		   	 this.jsRefreshMindmap = function() { //быстрое обновление всей карты на экране с сохранением состояния
-		   	 	 myjsPlumb.reset(); //стираем все линии
-		   	 	 var save_scroll_top = $("#mindmap").scrollTop();  //сохраняем позиции скроллинга, чтобы вернуть
-		   	 	 var save_scroll_left = $("#mindmap").scrollLeft();//всё как было после перереисовки
-		   	 	 
-		   	 	 var hidden_elements = []; //массив хранения свёрнутых элементов
-		   	 	 
-		   	 	 $(".hide").each(function(){
-			   	 	hidden_elements.push($(this).attr("myid"));
-		   	 	 });
-		   	 	 
-			   	 api4mindmap.jsRenderAllMap(1); //перерисовываем всю карту заново
+            this.jsFind = function (id, changes) { //возвращаем элемент с id или меняем его параметры
 
-		   	 	 $.each(hidden_elements, function(i, el){ //скрываем элементы, которые были скрыты до.
-			   	 	$("#node_"+el).addClass("hide");
-		   	 	 });
-		   	 	 
-		   	 	 api4mindmap.jsDrawMindmap(1);  //намечаем линии, взяв видимые узлы с экрана
-		   	 	 onResize(); //запускаем отрисовку закешированных линий
-		   	 	 
-		   	 	 $("#mindmap").scrollTop(save_scroll_top);  //сохраняем позиции скроллинга, чтобы вернуть
-		   	 	 $("#mindmap").scrollLeft(save_scroll_left);//всё как было после перереисовки
+                //находим элемент в массиве объектов, буква n нужна для отработки отрицательных id
+                var answer = my_all_data["n" + id];
+                if (!answer) return false; //если элемента в массиве нет
 
-		   	 }
-		   	 	
-		 	 this.jsRegAllKeys = function() { //регистрируем клики в элементы
+                if (changes) { //если нужно внести изменения, присваиваем их по очереди
+                    $.each(changes, function (name_field, new_field_value) {
+                        answer[name_field] = new_field_value;
+                    });
 
-			 	 $("#mindmap").on("keydown", ".n_title", function(e){ //отработка нажатия Enter
-					 
-			 	 	 if(e.keyCode==13) {
-				 	 	e.preventDefault();
-			 	 	 	$(this).blur(); //уводим фокус, при этом автоматом сохраняются данные
-			 	 	 }
-			 	 });
+                    db.put("mindmap_db", answer).done(function () { //асинхронно сохраняем данные в базе браузера
+                        console.info("Изменения сохранены в базу данных браузера"); //выводим в консоль браузера
+                    });
 
-			 	 $("#mindmap").on("keyup", ".n_title", function(e){
-					 e.preventDefault();
-			 	 	 if(e.keyCode==13) $(this).blur(); 
-				 	 onResize(); //перерисовываем линии, так как всё, скорее всего, сдвинулось
-			 	 });
+                }
+                return answer;
+            }
 
-			 	 $("#mindmap").on("blur", ".n_title", function(){ //при уводе фокуса, сохраняем заголовок
-			 	 	 var n_title_text = $(this).html();
-			 	 	 var id = $(this).parents("li:first").attr("myid");
-			 	 	 if(n_title_text.length==0) n_title_text = "Новый элемент"; //если всё стёрли, заголовок по умолч.
-			 	 	 $(this).html( strip_tags(n_title_text) ); //убираем теги и переносы строк
-			 	 	 this_api.jsFind(id, {title:n_title_text}); //сохраняем новый заголовок в массиве и базе данных
-				 	 onResize(); //перерисовываем линии
-			 	 });
+            this.jsFindByParent = function (parent_id) { //подбираем всех детей родителя parent_id
+                var answer = [];
+                $.each(my_all_data, function (i, el) { //фильтруем все неудалённые элементы с родителем = parent_id
+                    if ((el.parent_id == parent_id) && (!el.del)) answer.push(el);
+                });
+                return answer;
+            }
 
-			 	 $("#mindmap").on("click", ".n_title", function(){ //при клике в заголовок, фокусируемся
-			 	 	$(this).focus();
-			 	 });
+            this.jsAddNew = function (parent_id, title) { //добавляем нового ребёнка родителю parent_id
+                var max_id = 0;
+                $.each(my_all_data, function (i, el) { //находим максимальный id
+                    if (el.id > max_id) max_id = el.id;
+                });
+                var new_id = (parseInt(max_id) + 1); //новый неиспользованный id
+                my_all_data["n" + new_id] = {}; //создаём новый объект
+                my_all_data["n" + new_id] = {id: new_id, parent_id: parent_id, title: title}; //присваиваем заголовок
 
-			 	 $("#mindmap").on("focus", ".n_title", function(){ //при фокусе, выделяем весь текст
-			 	 	var ntitle = $(this);
- 	 		 	  	setTimeout(function(){ 
-		 	  		if(ntitle.is(":focus")) document.execCommand('selectAll',false,null); 
-		 	  		},3); //нужна задержка перед выделением всего текста специально для Firefox
+                return new_id;
+            }
 
-			 	 });
-			 	 
-			 	 $("#mindmap").on("click", ".collapse", function(){ //при сворачивании и разворачивании узлов
-			 	 	$(this).parents("li:first").toggleClass("hide"); //инвертирует класс
-			 	 	api4mindmap.jsDrawMindmap(1);  //дорисовываем линии, которых нет
-			 	 	onResize();
-			 	 	return false;
-			 	 });
+            //рекурсивно перебирает ВСЕХ детей, внуков и так далее
+            this.jsRecursiveByParent = function (id, recursive_array) {
+                if (!recursive_array) recursive_array = [];
 
-			 	 var font_size = 14; //шрифт по умолчанию
-			 	 $("#zoom_in").on("click", function(){ //кнопка увеличения масштаба
-			 	 	font_size += 1;
-			 	 	$("#mindmap").css("font-size", font_size+"px");
-			 	 	onResize();
-			 	 	return false;
-			 	 });
-			 	 $("#zoom_out").on("click", function(){ //кнопка уменьшения масштаба
-			 	 	font_size -= 1;
-			 	 	$("#mindmap").css("font-size", font_size+"px");
-			 	 	onResize();
-			 	 	return false;
-			 	 });
-			 	 
-			 	 $("#collapse_all").on("click", function(){ //кнопка "свернуть все элементы"
-			 	 	$("#node_1 ul li").addClass("hide");
-			 	 	onResize();
-			 	 	return false;
-			 	 });
+                var answer = this_api.jsFindByParent(id);
 
-			 	 $("#expand_all").on("click", function(){ //кнопка "развернуть все элементы"
-			 	 	$("#node_1 ul li").removeClass("hide"); 
-			 	 	onResize();
-			 	 	return false;
-			 	 });
-			 	 
+                $.each(answer, function (i, el) { //обходим все элементы и вызываем сами себя, пока есть дети
+                    recursive_array.push(el);
+                    recursive_array = this_api.jsRecursiveByParent(el.id, recursive_array);
+                });
+                return recursive_array;
+            }
 
-		 	 } //jsRegAllKeys
-		   	 	
-		   	 	
-		 }
-     }
+
+            this.jsDeleteById = function (id) { //удаляем всех детей и потомков этого родителя
+                if (confirm("Удалить элемент №" + id + " и его содержимое?")) {
+                    var childs = this_api.jsRecursiveByParent(id);
+                    $.each(childs, function (i, el) {
+                        api4mindmap.jsFind(el.id, {del: 1}); //"джихад" - сначала удаляем детей и всех потомков
+                    });
+                    if (id != 1) api4mindmap.jsFind(id, {del: 1}); //потом родителя, если это не №1
+                }
+            }
+
+            this.jsRenderAllMap = function (focus_id) { //выводим все элементы карты на экран
+                if (!focus_id) focus_id = 1;
+                var html = "<ul myid='" + focus_id + "'>";
+                html = this_api.jsRenderOneParent(focus_id, html); //рекурсивная функция
+                html += "</ul>";
+                $("#mindmap").html(html);
+                jsMakeDroppable(); //делаем новые элементы перетаскиваемыми
+            }
+
+            this.jsRenderOneParent = function (parent_id, html) { //рисуем элемент и всех потомков
+                html += "<li id='node_" + parent_id + "' myid='" + parent_id + "'>";
+                html += "<div class='big_n_title'>";
+                html += this_api.jsRenderOneElement(parent_id); //рисуем сам элемент
+                html += "</div>";
+
+                var childs = this_api.jsFindByParent(parent_id); //подбираем всех детей
+                if (childs.length) {
+                    html += "<ul class='childs' myid='" + parent_id + "'>";
+                }
+                $.each(childs, function (i, el) {
+                    html = this_api.jsRenderOneParent(el.id, html); //рекурсивно вызываем сами себя, пока есть дети
+                });
+                if (childs.length) {
+                    html += "</ul>";
+                }
+
+                html += "</li>";
+                return html;
+            }
+
+
+            this.jsRenderOneElement = function (id) { //рисуем один элемент
+                var element = this_api.jsFind(id); //сам элемент
+                var childs_count = this_api.jsFindByParent(id).length; //кол-во детей у элемента
+
+                var icon_type = '';
+                if (element.icon) icon_type = element.icon; //если сохранена иконка, используем её
+
+                if (childs_count > 0) { //если это папка
+                    var collapser_html = "<div class='collapse'></div>"; //круглый минус или плюс, для сворачивания
+                    var icon = "<div class='type_icon'><i class='icon-folder-1 folder'><div class='count'>" +
+                        childs_count + "</div></i><i class='" + icon_type + "'></i>" + "</div>";
+                } else {
+                    var collapser_html = "";
+                    var icon = "<div class='type_icon'><i class='" + icon_type + "'></i></div>";
+                }
+
+                var answer = icon + "<div class='n_title' contenteditable='true'>" + element.title +
+                    "</div><div class='contextmenu'></div>" + collapser_html;
+                return answer;
+            }
+
+            this.jsDrawMindmap = function (focus_id) { //функция рисует линии между элементами
+
+                var line_cache = [];
+
+                $("#mindmap ul:visible").each(function () { //исключаем свёрнутые списки ul
+                    var ul_id = $(this).attr("myid");
+                    var childs = this_api.jsFindByParent(ul_id);
+
+                    $.each(childs, function (i, el) { //для наглядности, сначала заполняем массив нужных линий
+                        var target = el.id;
+                        if (!$("li[myid='" + target + "']" + " .big_n_title:first").hasClass("_jsPlumb_endpoint_anchor_")) {
+                            var parent_id = el.parent_id;
+                            line_cache.push({source: parent_id, target: target});
+                        }
+                    });
+                });
+
+                if (line_cache.length) { //запускаем кеширование отрисовки линий, чтобы всё происходило быстрее
+                    if (!myjsPlumb.isSuspendDrawing()) {
+                        myjsPlumb.setSuspendDrawing(true, true);
+                        console.info("set_suspend");
+                    }
+                }
+
+
+                $.each(line_cache, function (i, el) {
+
+                    if (el.source == 1) { //у первого элемента линия начинается с половины высоты
+                        anchor1 = [ 1, 0.5, 1, 0, -1, -1 ];
+                    } else {
+                        anchor1 = [ 1, 1, 1, 0, -1, -1 ]; //линия идёт с низа
+                    }
+
+                    //первая точка для линии:
+                    var p1 = myjsPlumb.addEndpoint("node_" + el.source + " .big_n_title:first",
+                        { anchor: anchor1 });
+                    //вторая точка для линии:
+                    var p2 = myjsPlumb.addEndpoint("node_" + el.target + " .big_n_title:first",
+                        { anchor: [ 0, 1, -1, 0, 1, -1 ]});
+                    //сколько детей у элемента:
+                    var count = this_api.jsFindByParent(el.source).length;
+
+                    if (count > 10) { //если больше десяти, то линии будут прямыми
+                        var LineType = "Straight";
+                    } else {
+                        var LineType = "Bezier"; //кривая линия Безье
+                    }
+
+                    //соединяем две точки, которые определили выше
+                    myjsPlumb.connect({source: p1, target: p2, scope: "someScope",
+                        deleteEndpointsOnDetach: true, connector: [ LineType,
+                            { curviness: 30, cornerRadius: 20 } ]});
+                });
+            } //jsDrawMindmap
+
+            this.jsRefreshMindmap = function () { //быстрое обновление всей карты на экране с сохранением состояния
+                myjsPlumb.reset(); //стираем все линии
+                var save_scroll_top = $("#mindmap").scrollTop();  //сохраняем позиции скроллинга, чтобы вернуть
+                var save_scroll_left = $("#mindmap").scrollLeft();//всё как было после перереисовки
+
+                var hidden_elements = []; //массив хранения свёрнутых элементов
+
+                $(".hide").each(function () {
+                    hidden_elements.push($(this).attr("myid"));
+                });
+
+                api4mindmap.jsRenderAllMap(1); //перерисовываем всю карту заново
+
+                $.each(hidden_elements, function (i, el) { //скрываем элементы, которые были скрыты до.
+                    $("#node_" + el).addClass("hide");
+                });
+
+                api4mindmap.jsDrawMindmap(1);  //намечаем линии, взяв видимые узлы с экрана
+                onResize(); //запускаем отрисовку закешированных линий
+
+                $("#mindmap").scrollTop(save_scroll_top);  //сохраняем позиции скроллинга, чтобы вернуть
+                $("#mindmap").scrollLeft(save_scroll_left);//всё как было после перереисовки
+
+            }
+
+            this.jsRegAllKeys = function () { //регистрируем клики в элементы
+
+                $("#mindmap").on("keydown", ".n_title", function (e) { //отработка нажатия Enter
+
+                    if (e.keyCode == 13) {
+                        e.preventDefault();
+                        $(this).blur(); //уводим фокус, при этом автоматом сохраняются данные
+                    }
+                });
+
+                $("#mindmap").on("keyup", ".n_title", function (e) {
+                    e.preventDefault();
+                    if (e.keyCode == 13) $(this).blur();
+                    onResize(); //перерисовываем линии, так как всё, скорее всего, сдвинулось
+                });
+
+                $("#mindmap").on("blur", ".n_title", function () { //при уводе фокуса, сохраняем заголовок
+                    var n_title_text = $(this).html();
+                    var id = $(this).parents("li:first").attr("myid");
+                    if (n_title_text.length == 0) n_title_text = "Новый элемент"; //если всё стёрли, заголовок по умолч.
+                    $(this).html(strip_tags(n_title_text)); //убираем теги и переносы строк
+                    this_api.jsFind(id, {title: n_title_text}); //сохраняем новый заголовок в массиве и базе данных
+                    onResize(); //перерисовываем линии
+                });
+
+                $("#mindmap").on("click", ".n_title", function () { //при клике в заголовок, фокусируемся
+                    $(this).focus();
+                });
+
+                $("#mindmap").on("focus", ".n_title", function () { //при фокусе, выделяем весь текст
+                    var ntitle = $(this);
+                    setTimeout(function () {
+                        if (ntitle.is(":focus")) document.execCommand('selectAll', false, null);
+                    }, 3); //нужна задержка перед выделением всего текста специально для Firefox
+
+                });
+
+                $("#mindmap").on("click", ".collapse", function () { //при сворачивании и разворачивании узлов
+                    $(this).parents("li:first").toggleClass("hide"); //инвертирует класс
+                    api4mindmap.jsDrawMindmap(1);  //дорисовываем линии, которых нет
+                    onResize();
+                    return false;
+                });
+
+                var font_size = 14; //шрифт по умолчанию
+                $("#zoom_in").on("click", function () { //кнопка увеличения масштаба
+                    font_size += 1;
+                    $("#mindmap").css("font-size", font_size + "px");
+                    onResize();
+                    alert("Try_it" + my_all_data.n29.title);
+                    return false;
+                });
+                $("#zoom_out").on("click", function () { //кнопка уменьшения масштаба
+                    font_size -= 1;
+                    $("#mindmap").css("font-size", font_size + "px");
+                    onResize();
+                    return false;
+                });
+
+                $("#collapse_all").on("click", function () { //кнопка "свернуть все элементы"
+                    $("#node_1 ul li").addClass("hide");
+                    onResize();
+                    return false;
+                });
+
+                $("#expand_all").on("click", function () { //кнопка "развернуть все элементы"
+                    $("#node_1 ul li").removeClass("hide");
+                    onResize();
+                    return false;
+                });
+
+
+            } //jsRegAllKeys
+
+
+        }
+    }
      return arguments.callee.instance; //возвращаем все функции
 }
 
