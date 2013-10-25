@@ -64,11 +64,19 @@ db1 = new ydn.db.Storage('_all_mindmap', schema, options); //инициализ�
 ///////////////////////запускается после загрузки html страницы////////////////////////
 
 jQuery(function($){
+<<<<<<< HEAD
     //var t = new Task({path : "1.1", name: "First"});   //При этом вызывается Task.initialize и остальные поля корректно заполняются
     //var t1 = new Task({});  //При этом вызывается Task.initialize,  но поля заполняются криво
     var b= new TasksTT;
     b.add({path: "1", name: "Root"});  //При этом вызывается Task.initialize и остальные поля корректно заполняются
     b.add({path: "1.1", name: "R2", level: 2, pathArray : ["1", ".", "1"]});   //При этом вызывается Task.initialize и остальные поля корректно заполняются
+=======
+    var t = new Task({path : "1.1", name: "First"});
+    var t1 = new Task({});
+    var b= new TasksTT;
+    b.add({path: "1", name: "Root"});
+    b.add({path: "1.1", name: "R2", level: 2, pathArray : ["1", ".", "1"]});
+>>>>>>> c95b6f929914913aed8be4efe43f9adf68914f86
     b.addTask("1","New");
     console.info(JSON.stringify(b.models[0]));
     console.info(JSON.stringify(b.models[1]));
