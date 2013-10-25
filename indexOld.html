@@ -17,21 +17,16 @@
 	<script src="js/jquery-1.10.1.min.js"></script>
 	<script src="js/jquery-ui-1.10.3.custom.min.js"></script>
  	<script src="js/jquery.jsPlumb-1.4.1-all.js"></script>
-	<script src="contextmenu/src/jquery.contextMenu.js"></script>
+	<script src="mindmap.js"></script>
+    <script src="contextmenu/src/jquery.contextMenu.js"></script>	  	  
  	<script src="contextmenu/src/jquery.ui.position.js"></script>	  	  
 	<script src="js/ydn.db-jquery-0.7.5.js"></script>
-    <script src="lib/underscore.js"></script>
-    <script src="lib/backbone.js"></script>
 
-    <script src="TreeOfTasks.js"></script>
-    <script src="testMyTaskMVC.js"></script>
-
-    <!--<script src="testBackbone.js"></script>
-    <script src="test_db.js"></script>-->
-
+	
 	<title>Карта ума своими руками</title>
 </head>
 
+<body onload="jsDoFirst();" onresize="onResize()">
 
 <div id="mindmap_header">	
 	<i id="zoom_out" class="icon-zoom-out" title="Уменьшить карту"></i>	

@@ -7,10 +7,10 @@
 ///////////////////////запускается после загрузки html страницы////////////////////////
 
 jQuery(function($){
-    var testTask = new Task();
-    var testTask1 = new Task("1.1", "Task1");
 
-    console.info(JSON.stringify(testTask));
-    console.info(JSON.stringify(testTask1));
+
+    console.info(JSON.stringify(TreeOfTasks));
+    TreeOfTasks.addTask({parentPath:"1.1", newName:"Task1"});
+    console.info(JSON.stringify(TreeOfTasks));
 
 })

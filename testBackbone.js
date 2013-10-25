@@ -36,6 +36,7 @@ var TasksTT = Backbone.Collection.extend({ //Задачи одного ТТ
         var newPath = "0";
         var tmpArr =[];
 
+<<<<<<< HEAD
 
 
         for (var i = 0; i < this.length; i++) {
@@ -44,6 +45,13 @@ var TasksTT = Backbone.Collection.extend({ //Задачи одного ТТ
                 (this.models[i].get("path") > maxMinorNumber)
                 ){  //  Ищем все дочерние элементы parentPath. При помощи split расщепляем строку на массив из строк, разделитель "."
                 maxMinorNumber = (this.models[i].get("path"));
+=======
+        for (var i = 0; i < this.length; i++) {
+            if ((this.models[i].path.indexOf(parentPath) == 0) &&
+                (this.models[i].path.split(".").length - parentPath.split(".").length  == 1) &&
+                (this.models[i].path > maxMinorNumber) ){  //  Ищем все дочерние элементы parentPath. При помощи split расщепляем строку на массив из строк, разделитель "."
+                maxMinorNumber = this.models[i].path;
+>>>>>>> c95b6f929914913aed8be4efe43f9adf68914f86
             };
 
             console.log(i+ " : " + this.models[i].path + " : " +  maxMinorNumber);
